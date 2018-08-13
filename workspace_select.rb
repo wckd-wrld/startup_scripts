@@ -25,10 +25,14 @@ class Menu < Curses::Window
             when 'w'
                 @selectedItem = @menuItems[index-1]
                 self.draw
-            when 'a' 
+            when 's' 
+                if index + 1 == @menuItems.length then index = -1 end
                 @selectedItem = @menuItems[index+1]
                 self.draw
-            when Curses::Key::ENTER
+            when 'd' 
+                self.send(@selectedItem)
+            else 
+                
             end
         end
     end 
@@ -44,6 +48,13 @@ class Menu < Curses::Window
         end
         self.refresh
     end
+    def webdev 
+        system("st -c WebSt -e ranger &")
+        system("st -c WebSt -e ranger &")
+        system("firefox &")
+        system("krita &")
+        system("gitkraken &")
+    end
     public :initialize, :start
 end 
 
@@ -51,7 +62,7 @@ end
 
 Curses.init_screen
 begin
-    menu = Menu.new(['Web-Dev', 'Security', 'Game-Dev'])
+    menu = Menu.new(['webdev', 'security', 'gamedev', 'clear'])
     menu.start
 ensure
 	Curses.close_screen
